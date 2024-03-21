@@ -29,17 +29,17 @@ function percorrerArray(array) {
 percorrerArray(produtos);
 
 //map, find, filter, reduce
+const filteredProducts = produtos.filter((produtos) => produtos.valor > 10);
+console.log(filteredProducts);
 
-// function getRandomValuesFromArray(array, randomQuantity){
-//     if(randomQuantity > array.length){ return "Deu ruim"}
+const  mappedProducts = produtos.map((produtos) => produtos.quantidade * produtos.valor);
+console.log(mappedProducts);
 
-//     let randomProducts = [];
+const findProduct = produtos.find((produtos) => produtos.nome == 'Tenis');
+console.log(findProduct);
 
-//     while(randomProducts.length < randomQuantity){
-//         let randomNumber = Math.floor(Math.random() * array.length);
-//         if(!randomProducts.includes(array[randomNumber]));
-//             randomProducts.push(array[randomNumber]);
-//     }
-//     return randomProducts;
-// }
 
+const reducedProduct = produtos.reduce((ac, produto) => {
+    return ac + (produto.valor * produto.quantidade)}, 0
+);
+console.log(`Valor total da compra: ${reducedProduct}`);

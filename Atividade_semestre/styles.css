@@ -1,0 +1,58 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red
+}
+
+nav {
+    background-color: green;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+section {
+    display: flex;
+    flex-direction: row;
+}
+
+aside{
+    background-color: yellow;
+    flex-grow: 3;
+   }
+
+article{
+    background-color: blue;
+    flex-grow: 1;
+    order: -1;
+}
+
+span{
+    background-color: blueviolet;
+}
+
+.grid {
+    display: grid;
+    grid-template-areas: 
+     "header header header"
+     "nav main main"
+     "nav main main"
+     "nav footer footer";
+     gap: 10px;
+}
+
+.item1{
+    grid-area: header;
+}
+
+.item2{
+    grid-area: main;
+}
