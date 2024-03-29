@@ -1,9 +1,8 @@
 import { Schema, model } from "mongoose";
-import CategoryModel from "./category";
-import UserModel from "./user";
+import CategoryModel from "./category.schema";
+import UserModel from "./user.schema";
 
 const taskSchema = new Schema({
-  id: { type: String, required: true },
   title: { type: String, required: true },
   description: { type: String },
   creationDate: { type: Date },

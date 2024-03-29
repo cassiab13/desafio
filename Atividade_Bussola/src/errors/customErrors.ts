@@ -23,3 +23,16 @@ export class IncorrectPasswordError extends CustomError {
     super("Senha incorreta");
   }
 }
+
+
+export class TaskCannotBeCreated extends CustomError {
+  constructor() {
+    super("Tarefa não pode ser criada. Preencha os campos obrigatórios");
+  }
+}
+
+export class InternalError extends CustomError {
+  constructor() {
+    super("Falha na conexão");
+  }
+}
