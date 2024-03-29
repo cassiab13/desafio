@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
-import CategoryModel from "./category.schema";
-import UserModel from "./user.schema";
+import { TaskStatus } from "../enums/task.status";
 
 const taskSchema = new Schema({
   title: { type: String, required: true },
@@ -8,13 +7,13 @@ const taskSchema = new Schema({
   creationDate: { type: Date },
   finishDate: { type: Date },
   type: { type: String, required: true },
-  category: CategoryModel,
+  category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
   status: {
     type: String,
-    enum: ["pending", "in_progress", "completed"],
+    enum: Object.values(TaskStatus),
     required: true,
   },
-  user: UserModel,
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 export default model("Task", taskSchema);

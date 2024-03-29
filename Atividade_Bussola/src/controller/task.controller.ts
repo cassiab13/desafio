@@ -16,6 +16,64 @@ class TaskController {
       return res.status(500).json({ InternalError });
     }
   }
-}
 
+  async findAllTasks(req: Request, res: Response) {
+    return await new TaskService().findAllTasks();
+  }
+
+  async findAllTasksByUserId(req: Request, res: Response) {
+    try {
+      const userId = req.params.userId;
+      const tasks = await new TaskService().findAllTasksByUserId(userId);
+      return res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async findTaskById(req: Request, res: Response) {
+    try {
+      const taskid = req.params.taskId;
+      const task = await new TaskService().findTaskById(taskid);
+      return res.json(task);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async updateTask(req: Request, res: Response) {
+    try {
+      const taskId = req.params.taskId;
+      const updatedFields = req.body;
+      const updatedTask = await new TaskService().updateTask(
+        taskId,
+        updatedFields
+      );
+      return res.json(updatedTask);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async deleteTask(req: Request, res: Response) {
+    try {
+      const taskId = req.params.taskId;
+      const deletedTask = await new TaskService().deleteTask(taskId);
+      return res.json(deletedTask);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async filterTaskByCategory(req: Request, res: Response) {
+    try {
+      const categoryId = req.params.categoryId;
+      const tasks = await new TaskService().filterTaskByCategory(categoryId);
+      console.log("tarefa Filter:", tasks);
+      return res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+}
 export default new TaskController();

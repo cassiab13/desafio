@@ -20,7 +20,7 @@ class App {
     try {
       mongoose.set("strictQuery", true);
       await mongoose.connect("mongodb://0.0.0.0:27017/esoft-a-atividade");
-      console.log("connect database success");
+      console.log("Connect database success");
     } catch (error) {
       console.error("Cannot connect to database, error:", error);
     }

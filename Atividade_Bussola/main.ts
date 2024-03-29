@@ -1,8 +1,11 @@
 import app from "./app";
 
 function main() {
-  app.listen(3000, "localhost", () => {
-    console.log("Server running at port 3000");
+  const port = 3000;
+  const ipAddress = "localhost";
+
+  app.listen(port, ipAddress, () => {
+    console.log(`Server running at port ${port}`);
   });
 }
 

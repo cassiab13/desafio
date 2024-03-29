@@ -30,6 +30,11 @@ export class TaskCannotBeCreated extends CustomError {
     super("Tarefa não pode ser criada. Preencha os campos obrigatórios");
   }
 }
+export class TaskNotFound extends CustomError {
+  constructor() {
+    super("Tarefa não encontrada");
+  }
+}
 
 export class InternalError extends CustomError {
   constructor() {
