@@ -26,5 +26,9 @@ routes.get("/task/:taskId", taskController.findTaskById);
 routes.put("/task/:taskId", taskController.updateTask);
 routes.delete("/task/:taskId", taskController.deleteTask);
 routes.get("/task/find/:categoryId", taskController.filterTaskByCategory);
+routes.get("/task/status/:status", taskController.filterTasksByStatus);
+routes.get("/task/count/:userId", taskController.countTasksByUserId);
+routes.get("/task/recent/:userId", taskController.findMostRecentTaskByUser);
+routes.get("/task/oldest/:userId", taskController.findOldestTaskByUser);
 
 export { routes };

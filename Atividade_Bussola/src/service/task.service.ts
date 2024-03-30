@@ -15,8 +15,17 @@ export class TaskService {
   async findAllTasks() {
     return this.taskRepository.findAllTasks();
   }
+
   async findAllTasksByUserId(userId: string) {
     return this.taskRepository.findAllTasksByUserId(userId);
+  }
+
+  async findMostRecentTaskByUser(userId: string) {
+    return this.taskRepository.findMostRecentTaskByUser(userId);
+  }
+
+  async findOldestTaskByUser(userId: string) {
+    return this.taskRepository.findOldestTaskByUser(userId);
   }
 
   async findTaskById(taskId: string) {
@@ -32,10 +41,14 @@ export class TaskService {
   }
 
   async filterTaskByCategory(categoryId: string) {
-    const allTasks = await this.taskRepository.findAllTasks();
-    const filteredTasks = allTasks.filter(task => task.category === categoryId)
-    console.log(categoryId);
-    console.log(filteredTasks);
-    return filteredTasks;
+    return this.taskRepository.filterTaskByCategory(categoryId);
+  }
+
+  async filterTasksByStatus(status: string) {
+    return this.taskRepository.filterTasksByStatus(status);
+  }
+
+  async countTasksByUserId(userId: string) {
+    return this.taskRepository.countTasksByUserId(userId);
   }
 }

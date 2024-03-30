@@ -31,6 +31,24 @@ class TaskController {
     }
   }
 
+  async findMostRecentTaskByUser(req: Request, res: Response) {
+    try {
+      const userId = req.params.userId;
+      return res.json(await new TaskService().findMostRecentTaskByUser(userId));
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async findOldestTaskByUser(req: Request, res: Response) {
+    try {
+      const userId = req.params.userId;
+      return res.json(await new TaskService().findOldestTaskByUser(userId));
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
   async findTaskById(req: Request, res: Response) {
     try {
       const taskid = req.params.taskId;
@@ -69,8 +87,25 @@ class TaskController {
     try {
       const categoryId = req.params.categoryId;
       const tasks = await new TaskService().filterTaskByCategory(categoryId);
-      console.log("tarefa Filter:", tasks);
       return res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async filterTasksByStatus(req: Request, res: Response) {
+    try {
+      const status = req.params.status;
+      return res.json(await new TaskService().filterTasksByStatus(status));
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async countTasksByUserId(req: Request, res: Response) {
+    try {
+      const userId = req.params.userId;
+      return res.json(await new TaskService().countTasksByUserId(userId));
     } catch (error) {
       res.status(500).json({ InternalError });
     }

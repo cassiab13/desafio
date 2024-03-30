@@ -52,16 +52,20 @@ Rota para excluir uma categoria. ok
 
 Funcionalidades Adicionais utilizando Métodos de Array:
 
-Rota para filtrar tarefas por categoria.
-Rota para listar tarefas concluídas.
-Rota para listar tarefas pendentes.
+Rota para filtrar tarefas por categoria. ok
+Rota para listar tarefas concluídas. ok
+Rota para listar tarefas pendentes. ok
 Rota para listar tarefas que vencem em um determinado período.
-Rota para contar o número total de tarefas de um usuário.
-Rota para encontrar a tarefa mais recente de um usuário.
+Rota para contar o número total de tarefas de um usuário. ok
+Rota para encontrar a tarefa mais recente de um usuário. ok
 
 Rota para calcular a média de conclusão das tarefas.
 Rota para encontrar a tarefa com a descrição mais longa.
 Rota para agrupar tarefas por categoria.
-Rota para encontrar a tarefa mais antiga de um usuário.
+Rota para encontrar a tarefa mais antiga de um usuário. ok
 Observação:
-Estas rotas podem ser implementadas utilizando os métodos .map, .filter, .resume, .some e outros métodos de manipulação de array para alcançar as funcionalidades desejadas, agregando complexidade média a difícil ao projeto. Certifique-se de implementar as devidas verificações de segurança e validação dos dados em cada rota.
+Estas rotas podem ser implementadas utilizando os métodos .map, .filter, 
+.resume, .some e outros métodos de manipulação de array para alcançar as 
+funcionalidades desejadas, agregando complexidade média a difícil ao projeto. 
+Certifique-se de implementar as devidas verificações de segurança e validação 
+dos dados em cada rota.

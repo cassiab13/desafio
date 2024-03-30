@@ -4,7 +4,7 @@ import { TaskStatus } from "../enums/task.status";
 const taskSchema = new Schema({
   title: { type: String, required: true },
   description: { type: String },
-  creationDate: { type: Date },
+  creationDate: { type: Date, required: true },
   finishDate: { type: Date },
   type: { type: String, required: true },
   category: { type: Schema.Types.ObjectId, ref: "Category", required: true },

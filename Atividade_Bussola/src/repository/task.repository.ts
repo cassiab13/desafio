@@ -1,5 +1,7 @@
 import { TaskDto } from "../dto/task.dto";
+import { TaskStatus } from "../enums/task.status";
 import taskSchema from "../schema/task.schema";
+import mongoose from "mongoose";
 import { Types } from "mongoose";
 
 export class TaskRepository {
@@ -34,6 +36,42 @@ export class TaskRepository {
         status: task.status,
         user: task.user?.toString(),
       }));
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async sortTaskByCreationDate(userId: string): Promise<TaskDto[]> {
+    const tasks = await this.findAllTasksByUserId(userId);
+    if (tasks.length === 0) throw new Error("Não há tarefas para este usuário");
+    const sortedTasks = [...tasks];
+    sortedTasks.sort((a, b) => {
+      if (a.creationDate && b.creationDate) {
+        return b.creationDate.getTime() - a.creationDate.getTime();
+      } else if (!a.creationDate && !b.creationDate) {
+        return 0;
+      } else if (!a.creationDate) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    return sortedTasks;
+  }
+
+  async findMostRecentTaskByUser(userId: string): Promise<TaskDto[]> {
+    try {
+      const sortedTasks = await this.sortTaskByCreationDate(userId);
+      return [sortedTasks[0]];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async findOldestTaskByUser(userId: string): Promise<TaskDto[]> {
+    try {
+      const sortedTasks = await this.sortTaskByCreationDate(userId);
+      return [sortedTasks[sortedTasks.length - 1]];
     } catch (error) {
       throw error;
     }
@@ -74,6 +112,59 @@ export class TaskRepository {
       return "Tarefa deletada com sucesso";
     } catch (error) {
       throw new Error(`Erro ao remover a tarefa: ${error}`);
+    }
+  }
+
+  async filterTaskByCategory(categoryId: string): Promise<TaskDto[]> {
+    try {
+      return (await this.findAllTasks())
+        .filter(
+          (task) =>
+            String(task.category) ===
+            new mongoose.Types.ObjectId(categoryId).toString()
+        )
+        .map((task) => ({
+          title: task.title,
+          description: task.description,
+          creationDate: task.creationDate,
+          finishDate: task.finishDate,
+          type: task.type,
+          category: task.category?.toString(),
+          status: task.status,
+          user: task.user?.toString(),
+        }));
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async filterTasksByStatus(status: string): Promise<TaskDto[]> {
+    try {
+      console.log(status);
+      return (await this.findAllTasks())
+        .filter(
+          (task) => String(task.status).toUpperCase() === status.toUpperCase()
+        )
+        .map((task) => ({
+          title: task.title,
+          description: task.description,
+          creationDate: task.creationDate,
+          finishDate: task.finishDate,
+          type: task.type,
+          category: task.category?.toString(),
+          status: task.status,
+          user: task.user?.toString(),
+        }));
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async countTasksByUserId(userId: string): Promise<number> {
+    try {
+      return await taskSchema.countDocuments({ user: userId });
+    } catch (error) {
+      throw error;
     }
   }
 }

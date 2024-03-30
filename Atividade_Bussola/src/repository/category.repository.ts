@@ -6,7 +6,7 @@ export class CategoryRepository {
     const category = new categorySchema({
       name: categoryDto.name,
       color: categoryDto.color,
-      userId: categoryDto.userId,
+      user: categoryDto.userId,
     });
     return category.save();
   }
