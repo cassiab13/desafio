@@ -1,0 +1,48 @@
+Teste
+
+npm i -D jest @jest/globals @types/jest ts-jest supertest @types/supertest
+
+
+Jest Config
+module.exports = {
+    preset: 'ts-jest',
+    testEnvironment: 'node',
+    globals: {
+        'ts-jest': {
+            isolateModules: true
+        }
+    },
+    clearMocks: true,
+    coverageProvider: 'v8',
+    coverageTrashold: {
+        global: {
+            function: 80,
+            lines: 80,
+            statements: 80
+        }
+    },
+    testPathIgnorePatterns: ['./dist/*']
+}
+
+
+TsConfig
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "es2016",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "baseUrl": "./",
+        "incremental": true,
+        "skipLibCheck": true,
+        "strictNullChecks": true,
+        "strict": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true
+    }
+}

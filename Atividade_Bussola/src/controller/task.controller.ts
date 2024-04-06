@@ -110,5 +110,34 @@ class TaskController {
       res.status(500).json({ InternalError });
     }
   }
+
+  async findTasksByDate(req: Request, res: Response) {
+    try {
+      const { startDate, endDate } = req.params;
+      const tasks = await new TaskService().findTasksByDate(startDate, endDate);
+      return res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async findTaskWithLongestDescription(res: Response) {
+    try {
+      const tasks = await new TaskService().findTaskWithLongestDescription();
+      return res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
+
+  async groupTasksByCategory(req: Request, res: Response) {
+    try {
+      const categoryId = req.params.categoryId;
+      const tasks = await new TaskService().groupTasksByCategory(categoryId);
+      return res.json(tasks);
+    } catch (error) {
+      res.status(500).json({ InternalError });
+    }
+  }
 }
 export default new TaskController();

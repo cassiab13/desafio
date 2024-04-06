@@ -1,5 +1,4 @@
 import { TaskDto } from "../dto/task.dto";
-import { TaskStatus } from "../enums/task.status";
 import taskSchema from "../schema/task.schema";
 import mongoose from "mongoose";
 import { Types } from "mongoose";
@@ -140,7 +139,6 @@ export class TaskRepository {
 
   async filterTasksByStatus(status: string): Promise<TaskDto[]> {
     try {
-      console.log(status);
       return (await this.findAllTasks())
         .filter(
           (task) => String(task.status).toUpperCase() === status.toUpperCase()
@@ -165,6 +163,76 @@ export class TaskRepository {
       return await taskSchema.countDocuments({ user: userId });
     } catch (error) {
       throw error;
+    }
+  }
+
+  async findTasksByDate(
+    startDate: string,
+    endDate: string
+  ): Promise<TaskDto[]> {
+    try {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+
+      const tasks = await taskSchema.find({
+        dueDate: {
+          $gte: start,
+          $lte: end,
+        },
+      });
+      const mappedTasks: TaskDto[] = tasks.map((task) => ({
+        title: task.title,
+        description: task.description,
+        creationDate: task.creationDate,
+        finishDate: task.finishDate,
+        type: task.type,
+        category: task.category?.toString(),
+        status: task.status,
+        user: task.user?.toString(),
+      }));
+      return mappedTasks;
+    } catch (error) {
+      throw new Error("Erro ao buscar tarefas por período de vencimento");
+    }
+  }
+
+  async findTaskWithLongestDescription(): Promise<TaskDto[]> {
+    try {
+      const tasks = await this.findAllTasks();
+      if (tasks.length === 0)
+        throw new Error("Não existem tarefas cadastradas");
+      const longestDescription = tasks.reduce((previousTask, currentTask) => {
+        if (!previousTask.description || !currentTask.description)
+          return previousTask;
+        return previousTask.description.length > currentTask.description.length
+          ? previousTask
+          : currentTask;
+      });
+      return [longestDescription];
+    } catch (error) {
+      throw new Error(
+        "Não foi possível encontrar a tarefa com descrição mais longa"
+      );
+    }
+  }
+
+  async groupTasksByCategory(
+    categoryId: string
+  ): Promise<{ [category: string]: TaskDto[] }> {
+    try {
+      const filteredTasks = (await this.findAllTasks()).filter(
+        (task) => task.category.toString() === categoryId
+      );
+      const groupedTasks = filteredTasks.reduce((acc, task) => {
+        const category = task.category.toString();
+        if (!acc[category]) acc[category] = [];
+        acc[category].push(task);
+        return acc;
+      }, {} as { [category: string]: TaskDto[] });
+
+      return groupedTasks;
+    } catch (error) {
+      throw new Error("Não foi possível agrupar por categoria");
     }
   }
 }

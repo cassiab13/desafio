@@ -51,4 +51,16 @@ export class TaskService {
   async countTasksByUserId(userId: string) {
     return this.taskRepository.countTasksByUserId(userId);
   }
+
+  async findTasksByDate(startDate: string, endDate: string) {
+    return this.taskRepository.findTasksByDate(startDate, endDate);
+  }
+
+  async findTaskWithLongestDescription() {
+    return this.taskRepository.findTaskWithLongestDescription();
+  }
+
+  async groupTasksByCategory(categoryId: string) {
+    return this.taskRepository.groupTasksByCategory(categoryId);
+  }
 }

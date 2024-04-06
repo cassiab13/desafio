@@ -30,5 +30,11 @@ routes.get("/task/status/:status", taskController.filterTasksByStatus);
 routes.get("/task/count/:userId", taskController.countTasksByUserId);
 routes.get("/task/recent/:userId", taskController.findMostRecentTaskByUser);
 routes.get("/task/oldest/:userId", taskController.findOldestTaskByUser);
+routes.get(
+  "/tasks/due-date/:startDate/:endDate",
+  taskController.findTasksByDate
+);
+routes.get("/tasks/longest", taskController.findTaskWithLongestDescription);
+routes.get("/tasks/group/:categoryId", taskController.groupTasksByCategory);
 
 export { routes };
