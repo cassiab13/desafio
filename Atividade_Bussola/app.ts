@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { routes } from "./routes";
 
-class App {
+export class App {
   express: express.Application;
 
   constructor() {
@@ -19,7 +19,8 @@ class App {
   private async database() {
     try {
       mongoose.set("strictQuery", true);
-      await mongoose.connect("mongodb://0.0.0.0:27017/esoft-a-atividade");
+      await mongoose.connect("mongodb://0.0.0.0:27017/esoft-a-5s");
+      // await mongoose.connect("mongodb://db:27017");
       console.log("Connect database success");
     } catch (error) {
       console.error("Cannot connect to database, error:", error);
@@ -32,3 +33,4 @@ class App {
 }
 
 export default new App().express;
+

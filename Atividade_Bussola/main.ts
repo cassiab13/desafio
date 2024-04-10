@@ -1,6 +1,6 @@
 import app from "./app";
 
-function main() {
+export function main() {
   const port = 3000;
   const ipAddress = "localhost";
 

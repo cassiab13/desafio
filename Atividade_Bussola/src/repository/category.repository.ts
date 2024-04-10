@@ -2,6 +2,7 @@ import { CategoryDto } from "../dto/category.dto";
 import categorySchema from "../schema/category.schema";
 
 export class CategoryRepository {
+
   async create(categoryDto: CategoryDto) {
     const category = new categorySchema({
       name: categoryDto.name,

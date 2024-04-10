@@ -5,7 +5,6 @@ import bcrypt from "bcrypt";
 export class UserRepository {
   async create(userDto: UserDto) {
     const hashedPassword = await bcrypt.hash(userDto.password.toString(), 10);
-    console.log(hashedPassword);
     const user = new userModel({
       username: userDto.username,
       email: userDto.email,

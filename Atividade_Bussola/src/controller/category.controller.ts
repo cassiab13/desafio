@@ -16,13 +16,13 @@ class CategoryController {
 
   async findAllCategoryByUserId(req: Request, res: Response) {
     try {
-      const userId = req.params.categoryId;
+      const userId = req.params.userId;
       const categories = await new CategoryService().findAllCategoryByUserId(
         userId
       );
-      return res.json(categories);
+      res.status(200).json(categories);
     } catch (error) {
-      res.status(500).json({ InternalError });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 
