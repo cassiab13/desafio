@@ -16,7 +16,7 @@ export class CategoryRepository {
     userId: string
   ): Promise<CategoryDto[] | undefined> {
     try {
-      const categories = await categorySchema.find({ userId: userId });
+      const categories = await categorySchema.find({ user: userId });
       return categories.map((category) => ({
         name: category.name,
         color: category.color,
@@ -41,7 +41,7 @@ export class CategoryRepository {
     const updatedCategory = await categorySchema.findByIdAndUpdate(categoryId, {
       name: category.name,
       color: category.color,
-    });
+    }, {new: true});
     return updatedCategory;
   }
 

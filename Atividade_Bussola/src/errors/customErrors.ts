@@ -18,21 +18,26 @@ export class UserNotFoundError extends CustomError {
   }
 }
 
+export class CategoryNotFoundError extends CustomError {
+  constructor() {
+    super("Categoria não encontrada");
+  }
+}
+
 export class IncorrectPasswordError extends CustomError {
   constructor() {
     super("Senha incorreta");
   }
 }
 
-
-export class TaskCannotBeCreated extends CustomError {
+export class CannotBeCreated extends CustomError {
   constructor() {
-    super("Tarefa não pode ser criada. Preencha os campos obrigatórios");
+    super("Erro. Preencha os campos obrigatórios");
   }
 }
-export class TaskNotFound extends CustomError {
+export class NotFound extends CustomError {
   constructor() {
-    super("Tarefa não encontrada");
+    super("Não foi possível encontrar");
   }
 }
 

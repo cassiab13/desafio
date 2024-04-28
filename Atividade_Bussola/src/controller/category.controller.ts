@@ -1,16 +1,28 @@
-import { InternalError } from "./../errors/customErrors";
+import {
+  CannotBeCreated,
+  CategoryNotFoundError,
+  InternalError,
+  NotFound,
+} from "./../errors/customErrors";
 import { CategoryDto } from "./../dto/category.dto";
 import { Request, Response } from "express";
 import { CategoryService } from "../service/category.service";
+import mongoose from "mongoose";
+import { HttpStatus } from "../enums/http.status";
+import { NOTFOUND } from "dns";
 
 class CategoryController {
   async create(req: Request, res: Response) {
     try {
       const categoryDto: CategoryDto = req.body;
-      const newCategory = await new CategoryService().create(categoryDto);
-      return res.json(newCategory);
+      const user = new mongoose.Types.ObjectId(categoryDto.userId).toString();
+      const newCategory = await new CategoryService().create({
+        ...categoryDto,
+        userId: user,
+      });
+      return res.status(HttpStatus.CREATED).json(newCategory);
     } catch (error) {
-      console.log("Não foi possível criar a categoria");
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json(CannotBeCreated);
     }
   }
 
@@ -20,9 +32,9 @@ class CategoryController {
       const categories = await new CategoryService().findAllCategoryByUserId(
         userId
       );
-      res.status(200).json(categories);
+      res.status(HttpStatus.OK).json(categories);
     } catch (error) {
-      res.status(500).json({ error: "Internal server error" });
+      res.status(HttpStatus.BAD_REQUEST).json(NotFound);
     }
   }
 
@@ -30,9 +42,9 @@ class CategoryController {
     try {
       const categoryId = req.params.categoryId;
       const category = await new CategoryService().findCategoryById(categoryId);
-      return res.json(category);
+      return res.status(HttpStatus.OK).json(category);
     } catch (error) {
-      res.status(500).json({ InternalError });
+      res.status(HttpStatus.BAD_REQUEST).json(NotFound);
     }
   }
   async updateCategory(req: Request, res: Response) {
@@ -43,9 +55,9 @@ class CategoryController {
         categoryId,
         updatedFields
       );
-      return res.json(updatedCategory);
+      return res.status(HttpStatus.OK).json(updatedCategory);
     } catch (error) {
-      res.status(500).json({ InternalError });
+      res.status(HttpStatus.NOT_FOUND).json({ NotFound });
     }
   }
 
@@ -55,9 +67,11 @@ class CategoryController {
       const deletedCategory = await new CategoryService().deleteCategory(
         categoryId
       );
-      return res.json(deletedCategory);
+      return res.status(HttpStatus.NO_CONTENT).json(deletedCategory);
     } catch (error) {
-      res.status(500).json({ InternalError });
+      res.status(HttpStatus.NOT_FOUND).json({
+        NotFound,
+      });
     }
   }
 }

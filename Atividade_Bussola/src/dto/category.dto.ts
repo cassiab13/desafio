@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
 export class CategoryDto {
   name: string;
   color: string;

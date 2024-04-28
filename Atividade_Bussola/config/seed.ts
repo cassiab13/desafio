@@ -1,9 +1,13 @@
-import { MongoClient } from "mongodb";
-import express, { Application } from "express";
+import express from "express";
 import mongoose from "mongoose";
 import { routes } from "./../routes";
 import config from "./config";
-import { users } from "./users";
+import { createUsers } from "../config/users";
+import { createCategories } from "../config/categories";
+import { createTasks } from "../config/tasks";
+import UserModel from "../src/schema/user.schema";
+import CategoryModel from "../src/schema/category.schema";
+import TaskModel from "../src/schema/task.schema";
 
 export class RunSeed {
   express: express.Application;
@@ -40,19 +44,19 @@ export class RunSeed {
     }
   }
 
-  // public async database(): Promise<void> {
-  //   try {
-  //     const client = new MongoClient(`${this.DB_URL}/${this.DB_NAME}`);
-  //     await client.connect();
-
-  //     console.log(`Connect to: ${config.dbName}`);
-  //     const dbName = config.dbName;
-  //   } catch (error) {
-  //     console.error("Cannot connect to database, error:", error);
-  //   }
-  // }
   public async insertUserBase(collectionName: string) {
+    const users = createUsers();
     await mongoose.connection.collection(collectionName).insertMany(users);
+  }
+
+  public async insertCategoryBase(collectionName: string) {
+    const categories = await createCategories();
+    await mongoose.connection.collection(collectionName).insertMany(categories);
+  }
+
+  public async insertTaskBase(collectionName: string) {
+    const tasks = await createTasks();
+    await mongoose.connection.collection(collectionName).insertMany(tasks);
   }
 
   public async deleteAllDocuments(collectionName: string): Promise<void> {
